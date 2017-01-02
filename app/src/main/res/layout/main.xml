@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.example.androidthings.myproject.AnalogClock
+    <com.example.androidthings.myproject.util.AnalogClock
         android:id="@+id/clock"
         android:layout_width="100dp"
         android:layout_height="100dp" />

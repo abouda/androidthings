@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package com.example.androidthings.myproject;
+package com.example.androidthings.myproject.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.androidthings.myproject.R;
+import com.example.androidthings.myproject.util.AnalogClock;
+
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -63,7 +67,6 @@ public class MainActivity extends Activity {
                   .timeInterval()
                   .observeOn(AndroidSchedulers.mainThread())
                   .subscribe(i -> tick());
-
     }
 
     private void tick() {

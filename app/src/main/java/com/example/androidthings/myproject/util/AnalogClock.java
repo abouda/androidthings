@@ -1,4 +1,4 @@
-package com.example.androidthings.myproject;
+package com.example.androidthings.myproject.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -23,7 +23,7 @@ public class AnalogClock extends View {
     public AnalogClock(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        thickness = 2; //getResources().getDimensionPixelSize(R.dimen.clock_thickness);
+        thickness = 1; //getResources().getDimensionPixelSize(R.dimen.clock_thickness);
 
         paint = new Paint();
         paint.setStrokeWidth(thickness);
@@ -53,12 +53,12 @@ public class AnalogClock extends View {
 
         canvas.save();
         canvas.rotate((hour + (minute / 60f)) / 12.0f * 360.0f, radius, radius);
-        canvas.drawLine(radius, radius + (thickness / 2), radius, thickness * 3f, fillPaint);
+        canvas.drawLine(radius, radius + (thickness / 2), radius, radius / 3, fillPaint);
         canvas.restore();
 
         canvas.save();
         canvas.rotate(minute / 60.0f * 360.0f, radius, radius);
-        canvas.drawLine(radius, radius + (thickness / 2), radius, thickness * 2f, fillPaint);
+        canvas.drawLine(radius, radius + (thickness / 2), radius, radius / 10, fillPaint);
         canvas.restore();
     }
 
