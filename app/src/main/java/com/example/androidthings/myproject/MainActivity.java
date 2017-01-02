@@ -19,33 +19,57 @@ package com.example.androidthings.myproject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Skeleton of the main Android Things activity. Implement your device's logic
  * in this class.
- *
  * Android Things peripheral APIs are accessible through the class
  * PeripheralManagerService. For example, the snippet below will open a GPIO pin and
  * set it to HIGH:
- *
  * <pre>{@code
  * PeripheralManagerService service = new PeripheralManagerService();
  * mLedGpio = service.openGpio("BCM6");
  * mLedGpio.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
  * mLedGpio.setValue(true);
  * }</pre>
- *
  * For more complex peripherals, look for an existing user-space driver, or implement one if none
  * is available.
- *
  */
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private TextView    mTime;
+    private AnalogClock mClock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+
+        setContentView(R.layout.main);
+
+        mTime = (TextView) findViewById(R.id.time);
+        mClock = (AnalogClock) findViewById(R.id.clock);
+
+        Observable.interval(1000L, TimeUnit.MILLISECONDS)
+                  .timeInterval()
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(i -> tick());
+
+    }
+
+    private void tick() {
+        final String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        mTime.setText(currentDateTimeString);
+        mClock.setClock(System.currentTimeMillis());
     }
 
     @Override
